@@ -6,11 +6,11 @@ const cors = require('cors');
 require('dotenv').config();
 const server = http.createServer(app);
 const socket = io(server, { cors: { origin: '*' }, });
-const data = require('./data');
+const DATA = require('./data');
 
 socket.sockets.on('connection', (socket) => {
   setInterval(() => {
-    socket.emit('STS', data.STS);
+    socket.emit('STS', DATA.STS);
   }, 1500);
   socket.on('upload_request', data => {
     console.log(data);
@@ -23,7 +23,7 @@ app.use(cors());
 
 app.get('/', (req, res, next) => {
   res.send(`개발툴 콘솔창에 fetch("${process.env.SOCKET}")`);
-  socket.emit('newEvent', data.EVENT);
+  socket.emit('newEvent', DATA.EVENT);
 });
 
 app.use((req, res, next)=>{
